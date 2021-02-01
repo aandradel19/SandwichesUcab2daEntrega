@@ -1,1 +1,133 @@
-graciuas vuelva pronto
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="favicon.ico">
+     
+        <title>Administración | Pyzzeria</title>
+     
+            {# Cargamos la librería #}
+       {% load bootstrap4 %}
+     
+       {# CSS Bootstrap #}
+       {% bootstrap_css %}
+     
+     
+    </head>
+    <body>
+        <nav class="site-header py-1">
+            <div class="container d-flex flex-column flex-md-row justify-content-between">
+              <a class="py-2" href="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+              </a>
+              <a class="py-2 d-none d-md-inline-block" href="">Home</a>
+              <a class="py-2 d-none d-md-inline-block" href="">Ventas</a>
+              <a class="py-2 d-none d-md-inline-block" href="">Ventas por día</a>
+              <a class="py-2 d-none d-md-inline-block" href="">Ventas por ingrediente</a>
+              <a class="py-2 d-none d-md-inline-block" href="">Ventas por tamaño</a>
+
+            </div>
+          </nav>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center mb-5">Detalle del pedido</h1>
+            <div>
+
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <label for="out">Número de pedido</label>
+                            <input class="form-control" type="text" placeholder="{{ pedido.id }}" readonly>
+                        </div>
+                    </div>
+                </form>
+
+               <form>
+                <div class="row">
+                    <div class="col">
+                        <label for="out">Cliente</label>
+                        <input class="form-control " type="text" placeholder="{{ pedido.cedula }}" readonly>
+                    </div>
+                    <div class="col">
+                        <label for="out">Fecha compra</label>
+                        <input type="text" class="form-control" placeholder="{{ pedido.fecha_pedido }}" readonly>
+                    </div>
+                </div>
+               </form>
+               <br>
+               <h4>Información del pedido</h4>
+               {% for sandwich in pedido.sandwiches %} 
+                    <form>
+                        <div class="row">
+                            <div class="col">
+                                <label for="out">Número de Sandwich</label>
+                                <input class="form-control " type="text" placeholder="{{ sandwich.id }}" readonly>
+                            </div>
+                            <div class="col">
+                                <label for="out">Tamaño</label>
+                                <input type="text" class="form-control" placeholder="{{ sandwich.tamano_id.get_name }}" readonly>
+                            </div>
+                            <div class="col">
+                                <label for="out">Costo</label>
+                                <input type="text" class="form-control" placeholder="{{ sanwich.tamano_id.get_costo }} $" readonly>
+                            </div>
+                        </div>
+                    </form>
+                    {% if sandwich.cant_ingredientes > 0 %}
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Ingrediente</th>
+                                <th scope="col">Costo</th>
+                            </tr>
+                            </thead>
+                        {% for i in sandwich.ingredientes %}
+                            <tbody>
+                                <tr>
+                                <td>{{i.id.get_name}}</td>
+                                <td>{{i.id.get_costo}}</td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                        </table>
+                    {% endif %}
+                <form>
+                <!-- Aqui esta el total por cada sandwich -->
+                    <div class="row">
+                        <div class="col">
+                            <label for="out">Total del Sandwich</label>
+                            <input class="form-control is-valid" type="text" placeholder="{{ sandwich.costo }}  $" readonly>
+                        </div>
+                    </div>
+                </form>
+               {% endfor %} 
+               <form>
+                <!-- Aqui esta el total del pedido -->
+                <div class="row">
+                    <div class="col">
+                        <br>
+                        <h5>Total a pagar</h5>
+                        <input class="form-control is-valid" type="text" placeholder="{{ pedido.costo_total }}  $" readonly>
+                    </div>
+                </div>
+               </form>
+            </div>            
+            <!--/row-->
+        <br><br><br><br>
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+    <hr>
+    <p class="text-center"><br>
+        <a class="small text-info d-inline-block" >Sandwich UCAB</a>
+    </p>
+    
+</div>
+<!--/container-->
+            {% bootstrap_javascript jquery='full' %}
+    </body>
+  </html>

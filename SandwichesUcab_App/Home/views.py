@@ -29,7 +29,72 @@ def pedidosPage(request):
         })
 
 def totalizacionPage(request):
-    return render(request, 'totalizacion.html')
+    try:
+        pedidoID = request.POST['pedidoID']
+        select_tamano = '-1'
+        if 'select_tamano' in request.POST:
+            select_tamano = request.POST['select_tamano']
+        else:
+            return render(request, 'pedidos.html', {
+                'pedido_id': pedidoID,
+                'tamano': Tamano.objects.all(),
+                'ing': Ingrediente.objects.all(),
+                'error_message': "Error, debes seleccionar un tamaño",
+            })
+
+        ingredientes = list()
+        if 'ingredientes' in request.POST:
+            ingredientes = request.POST.getlist('ingredientes')
+
+        boton = request.POST['action']
+
+        if pedidoID == "":
+            return render(request, 'pedidos.html', {
+                'error_message': "Error, vuelve a intentarlo.",
+            })
+
+        print("ID= "+str(pedidoID))
+        print("Tamano= "+str(select_tamano))
+        print("Ingrediente= "+str(ingredientes))
+        print("Boton= "+str(boton))
+
+        pedido = Pedido.objects.get(pk=pedidoID)
+        tamano = Tamano.objects.get(pk=select_tamano)
+
+        sandwich = pedido.sandwich_set.create(pedido_id=pedido,tamano_id=tamano)
+        # pizza.save()
+
+        print("Sandwich ID= "+ str(sandwich.id))
+        for ingr in ingredientes:
+            print("algo: " + str(ingr))
+            i = Ingrediente.objects.get(pk=ingr)
+            sandwich_ingrediente = sandwich.sandwich_ingrediente_set.create(sandwich_id=sandwich,ingrediente_id=i)
+            # pizza_ing.save()
+
+        if boton == "agregar":
+            return render(request, 'pedidos.html', {
+                'pedido_id': pedidoID,
+                'tamano': Tamano.objects.all(),
+                'ing': Ingrediente.objects.all(),
+            })
+            
+        if boton == "finalizar":
+            return render(request, 'graciasVuelvaPronto.html', {
+                'pedido': pedido,
+            })
+
+    except:
+        if pedidoID != "":
+            return render(request, 'pedidos.html', {
+                'error_message': "Error, vuelve a intentarlo.",
+            })
+    else:
+        return render(request, 'pedidos.html', {
+            'pedido_id': pedidoID,
+            'tamano': Tamano.objects.all(),
+            'ing': Ingrediente.objects.all(),
+        })
+
 
 def historialPage(request):
     return render(request, 'historial.html')

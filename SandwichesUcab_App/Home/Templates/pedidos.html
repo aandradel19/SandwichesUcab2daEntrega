@@ -47,7 +47,7 @@
                 
                 
                     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-                    <form action="" method="post">
+                    <form action="{% url 'Home:totalizacionPage' %}" method="post">
                         {% csrf_token %}
                         <!-- form complex example -->
                         <div class="form-row mt-4">
@@ -56,7 +56,7 @@
                                 <div class="form-group big">
                                     {% for t in tamano %}
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="tam{{t.id}}" name="selTamano" value={{t.id}} class="custom-control-input">
+                                        <input type="radio" id="tam{{t.id}}" name="select_tamano" value={{t.id}} class="custom-control-input">
                                         <label class="custom-control-label" for="tam{{t.id}}">{{t.nombre_tamano}} | {{t.costo_tamano}} $</label>
                                     </div>
                                     {% endfor %}
@@ -69,7 +69,7 @@
                                 {% for i in ing %}
                                 <div class="form-row">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="ingredients" value={{i.id}} id="ing{{i.id}}">
+                                        <input type="checkbox" class="custom-control-input" name="ingredientes" value={{i.id}} id="ing{{i.id}}">
                                         <label class="custom-control-label" for="ing{{i.id}}">{{i.nombre_ingrediente}} | {{i.costo_ingrediente}} $</label>
                                     </div>
                                 </div>
@@ -81,8 +81,8 @@
                             
                             <div class="col-12">
                                 <input type="hidden" name="pedidoID" value="{{pedido_id}}">
-                                <button type="submit" class="btn btn-info" name="action" value="add">Agregar y repetir</button>
-                                <button type="submit" class="btn btn-success" name="action" value="end">Agregar y finalizar</button>
+                                <button type="submit" class="btn btn-info" name="action" value="agregar">Agregar y repetir</button>
+                                <button type="submit" class="btn btn-success" name="action" value="finalizar">Agregar y finalizar</button>
                             </div>
                         </div>
                     </form>
