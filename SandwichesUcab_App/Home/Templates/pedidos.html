@@ -1,1 +1,165 @@
-pedidos
+
+  <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="favicon.ico">
+     
+        <title>Pedidos | Pyzzeria</title>
+     
+            {# Cargamos la librería #}
+       {% load bootstrap4 %}
+     
+       {# CSS Bootstrap #}
+       {% bootstrap_css %}
+     
+     
+    </head>
+    <body>
+            
+        <nav class="site-header py-1">
+            <div class="container d-flex flex-column flex-md-row justify-content-between">
+              <a class="py-2" href="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+              </a>
+              <a class="py-2 d-none d-md-inline-block" href="">Home</a>
+              <a class="py-2 d-none d-md-inline-block" href="">Administrativo</a>
+              <a class="py-2 d-none d-md-inline-block" href="">Ventas por día</a>
+              <a class="py-2 d-none d-md-inline-block" href="">Ventas por ingrediente</a>
+              <a class="py-2 d-none d-md-inline-block" href="">Ventas por tamaño</a>
+
+            </div>
+          </nav>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center mb-5">Dale forma a tu pedido!</h2>
+            <div class="row">
+                
+
+                <div class="col-md-10 offset-md-1">
+                    <span class="anchor" id="formComplex"></span>
+                    <hr class="my-5">
+                    <h3>Comienza tu pedido . . .</h3>
+                    <h3>Pedido #{{pedido_id}}</h3>
+                
+                
+                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <!-- form complex example -->
+                        <div class="form-row mt-4">
+                            <div class="col-md-8 pb-3">
+                                <h5>Selecciona el tamaño de tu sandwich</h5>
+                                <div class="form-group big">
+                                    {% for t in tamano %}
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="tam{{t.tamano_id}}" name="selTamano" value={{t.tamano_id}} class="custom-control-input">
+                                        <label class="custom-control-label" for="tam{{t.tamano_id}}">{{t.nombre_tamano}} | {{t.costo_tamano}} UM</label>
+                                    </div>
+                                    {% endfor %}
+                                     <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Triple (580$)
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Doble (430$)
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline"></div>
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" > Individual (280$)
+                                        </label>
+                                    </div> 
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <h5>Selecciona que ingredientes deseas agregar</h5>
+
+                                {% for i in ing %}
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="ingredients" value={{i.ingrediente_id}} id="ing{{i.ingrediente_id}}">
+                                        <label class="custom-control-label" for="ing{{i.ingrediente_id}}">{{i.nombre_ingrediente}} | {{i.costo_ingrediente}} UM</label>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ingredientre1">
+                                        <label class="custom-control-label" for="ingredientre1">Jamon (40$)</label>
+                                    </div>
+                                </div>
+                                 <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ingredientre2">
+                                        <label class="custom-control-label" for="ingredientre2">Champinones (35$)</label>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ingredientre3">
+                                        <label class="custom-control-label" for="ingredientre3">Pimenton (30$)</label>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ingredientre4">
+                                        <label class="custom-control-label" for="ingredientre4">Doble queso (40$)</label>
+                                    </div>
+                                </div> 
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ingredientre5">
+                                        <label class="custom-control-label" for="ingredientre5">Aceitunas (57.5$)</label>
+                                    </div>
+                                </div> 
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ingredientre6">
+                                        <label class="custom-control-label" for="ingredientre6">Pepperoni (38.5$)</label>
+                                    </div>
+                                </div> 
+                                <div class="form-row">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ingredientre7">
+                                        <label class="custom-control-label" for="ingredientre7">Salchichon (62.5$)</label>
+                                    </div>
+                                </div> 
+                            </div>
+                            
+                        </div>
+                        <div class="form-row mt-4">
+                            
+                            <div class="col-12">
+                                <input type="hidden" name="pedidoID" value="{{pedido_id}}">
+                                <button type="submit" class="btn btn-info" name="action" value="add">Agregar y repetir</button>
+                                <button type="submit" class="btn btn-success" name="action" value="end">Agregar y finalizar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!--/row-->
+        <br><br><br><br>
+            
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+    <hr>
+    <p class="text-center"><br>
+        <a class="small text-info d-inline-block" >Sandwiches UCAB</a>
+    </p>
+    
+</div>
+<!--/container-->
+            {% bootstrap_javascript jquery='full' %}
+    </body>
+  </html>
