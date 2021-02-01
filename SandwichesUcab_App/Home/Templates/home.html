@@ -34,21 +34,15 @@
                             <hr class="my-5">
                             <h3>Comienza tu pedido . . .</h3>
                             
-                            <form action="" method="post">
+                            <form action="{% url 'Home:pedidosPage' %}" method="post">
                             {% csrf_token %}
                                 <!-- form complex example -->
                                 <div class="form-row mt-4">
                                     <div class="col-sm-6 pb-3">
-                                        <label for="exampleFirst">Nombres y Apelidos</label>
-                                        <input type="text" class="form-control" name="name">
+                                        <label for="exampleFirst">Cedula</label>
+                                        <input type="text" class="form-control" name="campo_cedula">
                                     </div>
-                                    <!-- <div class="col-sm-3 pb-3">
-                                        <label for="exampleSt">State</label>
-                                        <select class="form-control" id="exampleSt">
-                                            <option>Pick a state</option>
-                                        </select>
-                                    </div> -->
-                                    
+
                                 </div>
                                 <button type="submit" class="btn btn-info">Comenzar con tu pedido</button>
                             </form>

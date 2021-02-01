@@ -7,7 +7,7 @@
         <meta name="author" content="">
         <link rel="icon" href="favicon.ico">
      
-        <title>Pedidos | Pyzzeria</title>
+        <title>Pedidos | Sandwich</title>
      
             {# Cargamos la librería #}
        {% load bootstrap4 %}
@@ -56,25 +56,10 @@
                                 <div class="form-group big">
                                     {% for t in tamano %}
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="tam{{t.tamano_id}}" name="selTamano" value={{t.tamano_id}} class="custom-control-input">
-                                        <label class="custom-control-label" for="tam{{t.tamano_id}}">{{t.nombre_tamano}} | {{t.costo_tamano}} UM</label>
+                                        <input type="radio" id="tam{{t.id}}" name="selTamano" value={{t.id}} class="custom-control-input">
+                                        <label class="custom-control-label" for="tam{{t.id}}">{{t.nombre_tamano}} | {{t.costo_tamano}} $</label>
                                     </div>
                                     {% endfor %}
-                                     <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Triple (580$)
-                                        </label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Doble (430$)
-                                        </label>
-                                    </div>
-                                    <div class="form-check form-check-inline"></div>
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" > Individual (280$)
-                                        </label>
-                                    </div> 
                                 </div>
                             </div>
                             
@@ -84,53 +69,11 @@
                                 {% for i in ing %}
                                 <div class="form-row">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="ingredients" value={{i.ingrediente_id}} id="ing{{i.ingrediente_id}}">
-                                        <label class="custom-control-label" for="ing{{i.ingrediente_id}}">{{i.nombre_ingrediente}} | {{i.costo_ingrediente}} UM</label>
+                                        <input type="checkbox" class="custom-control-input" name="ingredients" value={{i.id}} id="ing{{i.id}}">
+                                        <label class="custom-control-label" for="ing{{i.id}}">{{i.nombre_ingrediente}} | {{i.costo_ingrediente}} $</label>
                                     </div>
                                 </div>
                                 {% endfor %}
-                                <div class="form-row">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="ingredientre1">
-                                        <label class="custom-control-label" for="ingredientre1">Jamon (40$)</label>
-                                    </div>
-                                </div>
-                                 <div class="form-row">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="ingredientre2">
-                                        <label class="custom-control-label" for="ingredientre2">Champinones (35$)</label>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="ingredientre3">
-                                        <label class="custom-control-label" for="ingredientre3">Pimenton (30$)</label>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="ingredientre4">
-                                        <label class="custom-control-label" for="ingredientre4">Doble queso (40$)</label>
-                                    </div>
-                                </div> 
-                                <div class="form-row">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="ingredientre5">
-                                        <label class="custom-control-label" for="ingredientre5">Aceitunas (57.5$)</label>
-                                    </div>
-                                </div> 
-                                <div class="form-row">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="ingredientre6">
-                                        <label class="custom-control-label" for="ingredientre6">Pepperoni (38.5$)</label>
-                                    </div>
-                                </div> 
-                                <div class="form-row">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="ingredientre7">
-                                        <label class="custom-control-label" for="ingredientre7">Salchichon (62.5$)</label>
-                                    </div>
-                                </div> 
                             </div>
                             
                         </div>

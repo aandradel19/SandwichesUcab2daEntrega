@@ -30,7 +30,7 @@ class Ingrediente(models.Model):
 
 class Pedido(models.Model):
     fecha_pedido = models.DateField('Fecha pedido')
-    nombre_cliente = models.CharField(max_length=200)
+    cedula = models.CharField(max_length=200)
     def sandwiches(self):
         return self.sandwich_set.all()
 
@@ -41,7 +41,7 @@ class Pedido(models.Model):
         return cont
 
     def __str__(self):
-        return self.nombre_cliente
+        return self.cedula
     
     def cant_sandwiches(self):
         return len(self.sandwich_set.all())
