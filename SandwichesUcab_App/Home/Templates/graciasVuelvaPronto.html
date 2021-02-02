@@ -57,7 +57,7 @@
                             </div>
                             <div class="col">
                                 <label for="out">Costo</label>
-                                <input type="text" class="form-control" placeholder="{{ sanwich.tamano_id.get_costo }} $" readonly>
+                                <input type="text" class="form-control" placeholder="{{ sandwich.tamano_id.get_costo }} $" readonly>
                             </div>
                         </div>
                     </form>
@@ -72,8 +72,8 @@
                         {% for i in sandwich.ingredientes %}
                             <tbody>
                                 <tr>
-                                <td>{{i.id.get_name}}</td>
-                                <td>{{i.id.get_costo}}</td>
+                                <td>{{i.ingrediente_id.get_name}}</td>
+                                <td>{{i.ingrediente_id.get_costo}}</td>
                             </tr>
                             </tbody>
                         {% endfor %}
@@ -105,6 +105,12 @@
         </div>
         <!--/col-->
     </div>
+    <form action="{% url 'Home:homePage' %}" method="post">
+                            {% csrf_token %}
+                                <!-- form complex example -->
+                                
+                                <button type="submit" class="btn btn-info">   Volver al inicio   </button>
+                            </form>
     <!--/row-->
     <hr>
     <p class="text-center"><br>
