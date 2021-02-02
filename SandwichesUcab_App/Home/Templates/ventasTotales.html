@@ -35,6 +35,28 @@
                             <h3>Reporte: ventas Generales</h3>
                             <br>
                             <br>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center" scope="col">Num. de factura</th>
+                                        <th style="text-align:center" scope="col">Fecha de venta</th>
+                                        <th style="text-align:center" scope="col">C.I. del cliente</th>
+                                        <th style="text-align:center" scope="col">Cantidad de Sandwiches</th>
+                                        <th style="text-align:center" scope="col">Monto pagado</th>
+                                    </tr>
+                                </thead>
+                                {% for i in venta %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center">{{i.Factura}}</td>
+                                            <td style="text-align:center">{{i.Fecha}}</td>
+                                            <td style="text-align:center">{{i.Cliente}}</td>
+                                            <td style="text-align:center">{{i.Cantidad_sandwiches}}</td>
+                                            <td style="text-align:center">{{i.Monto_sandwiches}}</td>
+                                        </tr>
+                                    </tbody>
+                                {% endfor %}
+                            </table>
 
                             <form action="{% url 'Home:homePage' %}" method="post">
                             {% csrf_token %}

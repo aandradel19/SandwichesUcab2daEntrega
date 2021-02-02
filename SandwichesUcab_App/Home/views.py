@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.template import loader
 from django.http import HttpResponse
 from django.utils import timezone 
+from django.db import connection
 from .models import *
 # Create your views here.
 
@@ -115,4 +116,28 @@ def ventasPorTamanoPage(request):
     return render(request, 'ventasPorTamano.html')
 
 def ventasTotalesPage(request):
-    return render(request, 'ventasTotales.html')
+    cursor = connection.cursor()
+    cursor.execute('''SELECT  ped.id Factura, ped.fecha_pedido Fecha, ped.cedula Cliente, 
+                            (SELECT count(*) 
+                                from Home_sandwich san 
+                                where san.pedido_id_id = ped.id) Cantidad_sandwiches,
+                                (select sum(ingredientes.monto + tamanos.monto) || " Bs."
+                                from (select COALESCE (sum(ing.costo_ingrediente),0) as monto
+                            from Home_ingrediente ing, Home_sandwich san, Home_sandwich_ingrediente si
+                            where ing.id = si.ingrediente_id_id and si.sandwich_id_id = san.id and san.pedido_id_id = ped.id)as ingredientes, 
+                                (select sum(tam.costo_tamano) as monto
+                                from Home_tamano tam, Home_sandwich san
+                                where san.tamano_id_id = tam.id and san.pedido_id_id = ped.id) as tamanos) Monto_sandwiches
+                from Home_pedido ped''')
+    salida = dictfetchall(cursor)
+    print(cursor)
+    return render(request, 'ventasTotales.html', {
+        'venta': salida
+    })
+    
+def dictfetchall(cursor):
+    desc = cursor.description
+    return [
+            dict(zip([col[0] for col in desc], row))
+            for row in cursor.fetchall()
+    ]
