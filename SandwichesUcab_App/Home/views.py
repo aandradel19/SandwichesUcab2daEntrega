@@ -151,22 +151,22 @@ def ventasPorIngredientesPage(request):
     from Home_sandwich san 
         where san.pedido_id_id = ped.id and san.id in (select sand2.id 
                                                         from Home_sandwich sand2, Home_ingrediente ing, Home_sandwich_ingrediente si  
-                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id = %s)) Cantidad_sandwiches,
+                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id in (select sing.id from Home_ingrediente i, Home_sandwich_ingrediente sing where i.nombre_ingrediente = %s and sing.ingrediente_id_id = i.id ))) Cantidad_sandwiches,
 (select sum(ingredientes.monto + tamanos.monto) || " Bs."
     from (select COALESCE (sum(ing.costo_ingrediente),0) as monto
              from Home_ingrediente ing, Home_sandwich san, Home_sandwich_ingrediente si
                  where ing.id = si.ingrediente_id_id and si.sandwich_id_id = san.id and san.pedido_id_id = ped.id and san.id in (select sand2.id 
                                                         from Home_sandwich sand2, Home_ingrediente ing, Home_sandwich_ingrediente si  
-                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id = %s))as ingredientes, 
+                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id in (select sing.id from Home_ingrediente i, Home_sandwich_ingrediente sing where i.nombre_ingrediente = %s and sing.ingrediente_id_id = i.id )))as ingredientes, 
          (select sum(tam.costo_tamano) as monto
              from Home_tamano tam, Home_sandwich san
                  where san.tamano_id_id = tam.id and san.pedido_id_id = ped.id and san.id in (select sand2.id 
                                                         from Home_sandwich sand2, Home_ingrediente ing, Home_sandwich_ingrediente si  
-                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id = %s)) as tamanos) Monto_sandwiches
+                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id in (select sing.id from Home_ingrediente i, Home_sandwich_ingrediente sing where i.nombre_ingrediente = %s and sing.ingrediente_id_id = i.id ))) as tamanos) Monto_sandwiches
 from Home_pedido ped 
 where ped.id in (select pp.id from Home_pedido pp, Home_sandwich ss where ss.pedido_id_id = pp.id and ss.id in (select sand2.id 
                                                         from Home_sandwich sand2, Home_ingrediente ing, Home_sandwich_ingrediente si  
-                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id = %s))''', [request.POST["ingrediente"], request.POST["ingrediente"], request.POST["ingrediente"], request.POST["ingrediente"]])
+                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id in (select sing.id from Home_ingrediente i, Home_sandwich_ingrediente sing where i.nombre_ingrediente = %s and sing.ingrediente_id_id = i.id )))''', [request.POST["ingrediente"], request.POST["ingrediente"], request.POST["ingrediente"], request.POST["ingrediente"]])
     salida = dictfetchall(cursor)
     return render(request, 'ventasPorIngredientes.html', {
         'venta': salida
@@ -177,16 +177,16 @@ def ventasPorTamanoPage(request):
     cursor.execute('''SELECT ped.id Factura, ped.fecha_pedido Fecha, ped.cedula Cliente, 
 (select count(*) 
     from Home_sandwich san 
-        where san.pedido_id_id = ped.id and san.tamano_id_id = %s) Cantidad_sandwiches,
+        where san.pedido_id_id = ped.id and san.tamano_id_id in (select t.id from Home_tamano t where t.nombre_tamano = %s)) Cantidad_sandwiches,
 (select sum(ingredientes.monto + tamanos.monto) || " Bs."
     from (select COALESCE (sum(ing.costo_ingrediente),0) as monto
              from Home_ingrediente ing, Home_sandwich san, Home_sandwich_ingrediente si
-                 where ing.id = si.ingrediente_id_id and si.sandwich_id_id = san.id and san.pedido_id_id = ped.id and san.tamano_id_id = %s)as ingredientes, 
+                 where ing.id = si.ingrediente_id_id and si.sandwich_id_id = san.id and san.pedido_id_id = ped.id and san.tamano_id_id in (select t.id from Home_tamano t where t.nombre_tamano = %s))as ingredientes, 
          (select sum(tam.costo_tamano) as monto
              from Home_tamano tam, Home_sandwich san
-                 where san.tamano_id_id = tam.id and san.pedido_id_id = ped.id and san.tamano_id_id = %s) as tamanos) Monto_sandwiches
+                 where san.tamano_id_id = tam.id and san.pedido_id_id = ped.id and san.tamano_id_id in (select t.id from Home_tamano t where t.nombre_tamano = %s)) as tamanos) Monto_sandwiches
 from Home_pedido ped 
-where ped.id in (select pp.id from Home_pedido pp, Home_sandwich ss where ss.pedido_id_id = pp.id and ss.tamano_id_id = %s)''', [request.POST["tamano"], request.POST["tamano"], request.POST["tamano"], request.POST["tamano"]])
+where ped.id in (select pp.id from Home_pedido pp, Home_sandwich ss where ss.pedido_id_id = pp.id and ss.tamano_id_id in (select t.id from Home_tamano t where t.nombre_tamano = %s))''', [request.POST["tamano"], request.POST["tamano"], request.POST["tamano"], request.POST["tamano"]])
     salida = dictfetchall(cursor)
     return render(request, 'ventasPorTamano.html', {
         'venta': salida
