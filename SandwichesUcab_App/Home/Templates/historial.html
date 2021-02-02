@@ -43,28 +43,28 @@
                                 <button type="submit" class="btn btn-info">   Ventas Generales   </button>
                             </form>
 
-                            <form action="{% url 'Home:ventasPorDiaPage' %}" method="post">
+                            <form action="{% url 'Home:ventasPorDiaPageEmpty' %}" method="post">
                                 {% csrf_token %}
                                     <!-- form complex example -->
                                     
                                     <button type="submit" class="btn btn-info">Ventas Por Dia</button>
                             </form>
 
-                            <form action="{% url 'Home:ventasPorTamanoPage' %}" method="post">
+                            <form action="{% url 'Home:ventasPorTamanoPageEmpty' %}" method="post">
                                     {% csrf_token %}
                                         <!-- form complex example -->
                                         
                                         <button type="submit" class="btn btn-info">Ventas Por tamano</button>
                             </form>
 
-                            <form action="{% url 'Home:ventasPorIngredientesPage' %}" method="post">
+                            <form action="{% url 'Home:ventasPorIngredientesPageEmpty' %}" method="post">
                                 {% csrf_token %}
                                     <!-- form complex example -->
                                     
                                     <button type="submit" class="btn btn-info">Ventas Por ingrediente</button>
                             </form>
 
-                            <form action="{% url 'Home:ventasPorClientesPage' %}" method="post">
+                            <form action="{% url 'Home:ventasPorClientesPageEmpty' %}" method="post">
                                 {% csrf_token %}
                                     <!-- form complex example -->
                                     
