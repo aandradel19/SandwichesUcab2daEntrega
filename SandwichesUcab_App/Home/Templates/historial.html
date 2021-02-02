@@ -63,6 +63,27 @@
                                     <button type="submit" class="btn btn-info">Ventas Por Cliente</button>
                             </form>
 
+                            <form action="{% url 'Home:agrupadosPorCliente' %}" method="post">
+                                {% csrf_token %}
+                                    <!-- form complex example -->
+                                    
+                                    <button type="submit" class="btn btn-info">Ventas Agrupadas Por Cliente</button>
+                            </form>
+
+                            <form action="{% url 'Home:agrupadosPorTamano' %}" method="post">
+                                {% csrf_token %}
+                                    <!-- form complex example -->
+                                    
+                                    <button type="submit" class="btn btn-info">Ventas Agrupadas Por Tamaño de Sandwich</button>
+                            </form>
+
+                            <form action="{% url 'Home:agrupadosPorIngrediente' %}" method="post">
+                                {% csrf_token %}
+                                    <!-- form complex example -->
+                                    
+                                    <button type="submit" class="btn btn-info">Ventas Agrupadas Por Ingrediente</button>
+                            </form>
+
                             <form action="{% url 'Home:homePage' %}" method="post">
                                 {% csrf_token %}
                                     <!-- form complex example -->

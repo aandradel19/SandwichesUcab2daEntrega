@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="favicon.ico">
+     
+        <title>Agrupado por Cliente | SandwichesUCAB</title>
+     
+       {% load bootstrap4 %}
+     
+       {# CSS Bootstrap #}
+       {% bootstrap_css %}
+    </head>
+    <body>
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="text-center mb-5">SandwichesUCAB</h2>
+                    <div class="row">
+                        
+
+                        <div class="col-md-10 offset-md-1">
+                            <span class="anchor" id="formComplex"></span>
+                            <hr class="my-5">
+                            <h3>Reporte: Ventas agrupadas por clientes</h3>
+                            <br>
+                            <br>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center" scope="col">C.I. del cliente</th>
+                                        <th style="text-align:center" scope="col">Cant. Pedidos realizados</th>
+                                        <th style="text-align:center" scope="col">Cant. Sandwiches comprados</th>
+                                        <th style="text-align:center" scope="col">Total gastado</th>
+                                    </tr>
+                                </thead>
+                                {% for i in venta %}
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center">{{i.Cliente}}</td>
+                                            <td style="text-align:center">{{i.Pedidos}}</td>
+                                            <td style="text-align:center">{{i.Sandwiches}}</td>
+                                            <td style="text-align:center">{{i.Gastado}}</td>
+                                        </tr>
+                                    </tbody>
+                                {% endfor %}
+                            </table>
+
+                            <form action="{% url 'Home:homePage' %}" method="post">
+                            {% csrf_token %}
+                                <!-- form complex example -->
+                                
+                                <button type="submit" class="btn btn-info">   Volver al inicio   </button>
+                            </form>
+
+
+                            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                        </div>
+                    </div>
+                    <!--/row-->
+                <br><br><br><br>
+                </div>
+                <!--/col-->
+            </div>
+            <!--/row-->
+            <hr>
+            <p class="text-center"><br>
+                <a class="small text-info d-inline-block">SandwichesUCAB</a>
+            </p>
+        </div>
+            {% bootstrap_javascript jquery='full' %}
+    </body>
+  </html>

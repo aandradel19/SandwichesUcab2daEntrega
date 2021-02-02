@@ -16,4 +16,8 @@ urlpatterns = [
     path('ventasPorDiaEmpty/',views.ventasPorDiaPageEmpty, name='ventasPorDiaPageEmpty'),
     path('ventasPorIngredientesEmpty/',views.ventasPorIngredientesPageEmpty, name='ventasPorIngredientesPageEmpty'),
     path('ventasPorTamanoEmpty/',views.ventasPorTamanoPageEmpty, name='ventasPorTamanoPageEmpty'),
+    path('agrupadosPorCliente/',views.agrupadosPorClientePage, name='agrupadosPorCliente'),
+    path('agrupadosPorIngrediente/',views.agrupadosPorIngredientePage, name='agrupadosPorIngrediente'),
+    path('agrupadosPorTamano/',views.agrupadosPorTamanoPage, name='agrupadosPorTamano'),
+    
 ]

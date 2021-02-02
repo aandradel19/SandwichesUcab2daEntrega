@@ -228,6 +228,57 @@ def ventasPorIngredientesPageEmpty(request):
 
 def ventasPorDiaPageEmpty(request):
     return render(request, 'ventasPorDia.html')
+
+def agrupadosPorClientePage(request):
+    cursor = connection.cursor()
+    cursor.execute('''SELECT  ped.cedula Cliente, 
+(select count(*) from Home_pedido pedc where pedc.cedula = ped.cedula) Pedidos, 
+(select count(*) from Home_sandwich san, Home_pedido peds where san.pedido_id_id = peds.id and peds.cedula = ped.cedula) Sandwiches, 
+(select sum(ingredientes.monto + tamanos.monto) || " Bs."
+    from (select COALESCE (sum(ing.costo_ingrediente),0) as monto from Home_ingrediente ing, Home_sandwich san2, Home_sandwich_ingrediente si, Home_pedido pedf
+            where san2.pedido_id_id = pedf.id and pedf.cedula= ped.cedula and ing.id = si.ingrediente_id_id and si.sandwich_id_id = san2.id) as ingredientes,
+          (select sum(tam.costo_tamano) as monto
+             from Home_tamano tam, Home_sandwich san2, Home_pedido pedf
+                 where san2.tamano_id_id = tam.id and san2.pedido_id_id = pedf.id and pedf.cedula= ped.cedula) as tamanos) Gastado from Home_pedido ped group by 1 order by 3 desc, 4 desc''')
+    salida = dictfetchall(cursor)
+    return render(request, 'agrupadosPorCliente.html', {
+        'venta': salida
+    })
+    
+
+def agrupadosPorIngredientePage(request):
+    cursor = connection.cursor()
+    cursor.execute('''SELECT ing.nombre_ingrediente Ingrediente, 
+(select count (*) from Home_sandwich_ingrediente si where si.ingrediente_id_id = ing.id ) Cantidad,
+(select sum(ingredientes.monto + tamanos.monto) || " Bs."
+    from (select COALESCE (sum(ing2.costo_ingrediente),0) as monto from Home_ingrediente ing2, Home_sandwich san2, Home_sandwich_ingrediente si
+        where ing2.id = si.ingrediente_id_id and si.sandwich_id_id = san2.id 
+            and san2.id in (select ss.sandwich_id_id from Home_sandwich_ingrediente ss where ss.ingrediente_id_id = ing.id)) as ingredientes,
+         (select sum(tam.costo_tamano) as monto
+             from Home_tamano tam, Home_sandwich san2
+                 where san2.tamano_id_id = tam.id and san2.id in (select ss.sandwich_id_id from Home_sandwich_ingrediente ss where ss.ingrediente_id_id = ing.id)) as tamanos
+) Gastado from Home_ingrediente ing order by 2 desc, 3 desc''')
+    salida = dictfetchall(cursor)
+    return render(request, 'agrupadosPorIngrediente.html', {
+        'venta': salida
+    })
+    
+def agrupadosPorTamanoPage(request):
+    cursor = connection.cursor()
+    cursor.execute('''SELECT tame.nombre_tamano Tamano, 
+(select count (*) from Home_sandwich san where san.tamano_id_id = tame.id ) Cantidad,
+(select sum(ingredientes.monto + tamanos.monto) || " Bs."
+    from (select COALESCE (sum(ing2.costo_ingrediente),0) as monto from Home_ingrediente ing2, Home_sandwich san2, Home_sandwich_ingrediente si
+        where ing2.id = si.ingrediente_id_id and si.sandwich_id_id = san2.id 
+            and san2.tamano_id_id = tame.id) as ingredientes,
+         (select sum(tam.costo_tamano) as monto
+             from Home_sandwich san2, Home_tamano tam
+                 where san2.tamano_id_id = tam.id and tam.id = tame.id) as tamanos
+) Gastado from Home_tamano tame order by 2 desc, 3 desc''')
+    salida = dictfetchall(cursor)
+    return render(request, 'agrupadosPorTamano.html', {
+        'venta': salida
+    })
     
 def dictfetchall(cursor):
     desc = cursor.description
