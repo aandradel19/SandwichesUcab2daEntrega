@@ -101,3 +101,18 @@ def historialPage(request):
 
 def graciasVuelvaProntoPage(request):
     return render(request, 'graciasVuelvaPronto.html')
+    
+def ventasPorClientesPage(request):
+    return render(request, 'ventasPorClientes.html')
+
+def ventasPorDiaPage(request):
+    return render(request, 'ventasPorDia.html')
+
+def ventasPorIngredientesPage(request):
+    return render(request, 'ventasPorIngredientes.html')
+
+def ventasPorTamanoPage(request):
+    return render(request, 'ventasPorTamano.html')
+
+def ventasTotalesPage(request):
+    return render(request, 'ventasTotales.html')

@@ -46,9 +46,17 @@
                                 </div>
                                 <button type="submit" class="btn btn-info">Comenzar con tu pedido</button>
                             </form>
+                            <form action="{% url 'Home:historialPage' %}" method="post">
+                                {% csrf_token %}
+                                    <!-- form complex example -->
+                                    
+                                    <button type="submit" class="btn btn-info">   Entrar al historial   </button>
+                            </form>
                             {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
                         </div>
+                        
                     </div>
+                    
                     <!--/row-->
                 <br><br><br><br>
                 </div>

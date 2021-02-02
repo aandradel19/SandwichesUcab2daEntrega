@@ -32,51 +32,17 @@
                         <div class="col-md-10 offset-md-1">
                             <span class="anchor" id="formComplex"></span>
                             <hr class="my-5">
-                            <h3>Reportes . . .</h3>
+                            <h3>Reporte: ventas por ingredientes</h3>
                             <br>
                             <br>
 
-                            <form action="{% url 'Home:ventasTotalesPage' %}" method="post">
+                            <form action="{% url 'Home:homePage' %}" method="post">
                             {% csrf_token %}
                                 <!-- form complex example -->
                                 
-                                <button type="submit" class="btn btn-info">   Ventas Generales   </button>
+                                <button type="submit" class="btn btn-info">   Volver al inicio   </button>
                             </form>
 
-                            <form action="{% url 'Home:ventasPorDiaPage' %}" method="post">
-                                {% csrf_token %}
-                                    <!-- form complex example -->
-                                    
-                                    <button type="submit" class="btn btn-info">Ventas Por Dia</button>
-                            </form>
-
-                            <form action="{% url 'Home:ventasPorTamanoPage' %}" method="post">
-                                    {% csrf_token %}
-                                        <!-- form complex example -->
-                                        
-                                        <button type="submit" class="btn btn-info">Ventas Por tamano</button>
-                            </form>
-
-                            <form action="{% url 'Home:ventasPorIngredientesPage' %}" method="post">
-                                {% csrf_token %}
-                                    <!-- form complex example -->
-                                    
-                                    <button type="submit" class="btn btn-info">Ventas Por ingrediente</button>
-                            </form>
-
-                            <form action="{% url 'Home:ventasPorClientesPage' %}" method="post">
-                                {% csrf_token %}
-                                    <!-- form complex example -->
-                                    
-                                    <button type="submit" class="btn btn-info">Ventas Por Cliente</button>
-                            </form>
-
-                            <form action="{% url 'Home:homePage' %}" method="post">
-                                {% csrf_token %}
-                                    <!-- form complex example -->
-                                    
-                                    <button type="submit" class="btn btn-info">   Volver al inicio   </button>
-                            </form>
 
                             {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
                         </div>

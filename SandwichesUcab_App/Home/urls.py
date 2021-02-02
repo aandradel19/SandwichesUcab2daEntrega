@@ -7,4 +7,9 @@ urlpatterns = [
     path('totalizacion/',views.totalizacionPage, name='totalizacionPage'),
     path('historial/',views.historialPage, name='historialPage'),
     path('graciasVuelvaPronto/',views.graciasVuelvaProntoPage, name='graciasVuelvaProntoPage'),
+    path('ventasPorClientes/',views.ventasPorClientesPage, name='ventasPorClientesPage'),
+    path('ventasPorDia/',views.ventasPorDiaPage, name='ventasPorDiaPage'),
+    path('ventasPorIngredientes/',views.ventasPorIngredientesPage, name='ventasPorIngredientesPage'),
+    path('ventasPorTamano/',views.ventasPorTamanoPage, name='ventasPorTamanoPage'),
+    path('ventasTotales/',views.ventasTotalesPage, name='ventasTotalesPage'),
 ]
