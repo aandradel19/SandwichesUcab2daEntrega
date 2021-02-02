@@ -63,14 +63,12 @@ def totalizacionPage(request):
         tamano = Tamano.objects.get(pk=select_tamano)
 
         sandwich = pedido.sandwich_set.create(pedido_id=pedido,tamano_id=tamano)
-        # pizza.save()
 
         print("Sandwich ID= "+ str(sandwich.id))
         for ingr in ingredientes:
             print("algo: " + str(ingr))
             i = Ingrediente.objects.get(pk=ingr)
             sandwich_ingrediente = sandwich.sandwich_ingrediente_set.create(sandwich_id=sandwich,ingrediente_id=i)
-            # pizza_ing.save()
 
         if boton == "agregar":
             return render(request, 'pedidos.html', {
@@ -145,6 +143,7 @@ where ped.fecha_pedido = %s ''', [request.POST["fecha"]])
     })
 
 def ventasPorIngredientesPage(request):
+    print(request.POST["ingredienteselect"])
     cursor = connection.cursor()
     cursor.execute('''SELECT  ped.id Factura, ped.fecha_pedido Fecha, ped.cedula Cliente, 
 (select count(*) 
@@ -166,10 +165,11 @@ def ventasPorIngredientesPage(request):
 from Home_pedido ped 
 where ped.id in (select pp.id from Home_pedido pp, Home_sandwich ss where ss.pedido_id_id = pp.id and ss.id in (select sand2.id 
                                                         from Home_sandwich sand2, Home_ingrediente ing, Home_sandwich_ingrediente si  
-                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id in (select sing.id from Home_ingrediente i, Home_sandwich_ingrediente sing where i.nombre_ingrediente = %s and sing.ingrediente_id_id = i.id )))''', [request.POST["ingrediente"], request.POST["ingrediente"], request.POST["ingrediente"], request.POST["ingrediente"]])
+                                                            where si.sandwich_id_id = sand2.id and si.ingrediente_id_id in (select sing.id from Home_ingrediente i, Home_sandwich_ingrediente sing where i.nombre_ingrediente = %s and sing.ingrediente_id_id = i.id )))''', [request.POST["ingredienteselect"], request.POST["ingredienteselect"], request.POST["ingredienteselect"], request.POST["ingredienteselect"]])
     salida = dictfetchall(cursor)
     return render(request, 'ventasPorIngredientes.html', {
-        'venta': salida
+        'venta': salida,
+        'ing': Ingrediente.objects.all(),
     })
 
 def ventasPorTamanoPage(request):
@@ -186,10 +186,11 @@ def ventasPorTamanoPage(request):
              from Home_tamano tam, Home_sandwich san
                  where san.tamano_id_id = tam.id and san.pedido_id_id = ped.id and san.tamano_id_id in (select t.id from Home_tamano t where t.nombre_tamano = %s)) as tamanos) Monto_sandwiches
 from Home_pedido ped 
-where ped.id in (select pp.id from Home_pedido pp, Home_sandwich ss where ss.pedido_id_id = pp.id and ss.tamano_id_id in (select t.id from Home_tamano t where t.nombre_tamano = %s))''', [request.POST["tamano"], request.POST["tamano"], request.POST["tamano"], request.POST["tamano"]])
+where ped.id in (select pp.id from Home_pedido pp, Home_sandwich ss where ss.pedido_id_id = pp.id and ss.tamano_id_id in (select t.id from Home_tamano t where t.nombre_tamano = %s))''', [request.POST["tamanoselect"], request.POST["tamanoselect"], request.POST["tamanoselect"], request.POST["tamanoselect"]])
     salida = dictfetchall(cursor)
     return render(request, 'ventasPorTamano.html', {
-        'venta': salida
+        'venta': salida,
+        'tamano': Tamano.objects.all(),
     })
 
 def ventasTotalesPage(request):
@@ -213,13 +214,17 @@ def ventasTotalesPage(request):
     
     
 def ventasPorTamanoPageEmpty(request):
-    return render(request, 'ventasPorTamano.html')
+    return render(request, 'ventasPorTamano.html', {
+        'tamano': Tamano.objects.all(),
+    })
 
 def ventasPorClientesPageEmpty(request):
     return render(request, 'ventasPorClientes.html')
 
 def ventasPorIngredientesPageEmpty(request):
-    return render(request, 'ventasPorIngredientes.html')
+    return render(request, 'ventasPorIngredientes.html', {
+        'ing': Ingrediente.objects.all(),
+    })         
 
 def ventasPorDiaPageEmpty(request):
     return render(request, 'ventasPorDia.html')

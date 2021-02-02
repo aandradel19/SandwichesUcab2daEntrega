@@ -6,7 +6,7 @@
         <meta name="author" content="">
         <link rel="icon" href="favicon.ico">
      
-        <title>Pedidos | Pyzzeria</title>
+        <title>Ventas por ingredientes | SandwichesUCAB</title>
      
        {% load bootstrap4 %}
      
@@ -14,18 +14,11 @@
        {% bootstrap_css %}
     </head>
     <body>
-        <nav class="site-header py-1">
-            <div class="container d-flex flex-column flex-md-row justify-content-between">
-        
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
-              </a>
-       
-            </div>
-          </nav>
+    
         <div class="container py-5">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="text-center mb-5">Sandwich.com</h2>
+                    <h2 class="text-center mb-5">SandwichesUCAB</h2>
                     <div class="row">
 
                     <div class="container">
@@ -33,15 +26,23 @@
                                 <div class='col-sm-6'>
                                     <form action="{% url 'Home:ventasPorIngredientesPage' %}" method="post">
                                     {% csrf_token %}
-                                        <label>Introduzca el nombre del ingrediente</label>
+                                        <label>Seleccione un ingrediente</label>
+                                        <div class="form-group big">
+                                                {% for i in ing %}
+                                                    <div class="form-row">
+                                                        <div class="custom-control custom-radio custom-control-inline">
+                                                            <input type="radio" id="ing{{i.id}}" name="ingredienteselect" value={{i.nombre_ingrediente}} class="custom-control-input">
+                                                             <label class="custom-control-label" for="ing{{i.id}}">{{i.nombre_ingrediente}} </label>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                        </div>
                                         <div class="form-group row">
-                                                <div class='input-group date col-md-6' id='datetimepicker1'>
-                                                    <input type='text' class="form-control" name="ingrediente" > 
-                                                </div>
                                                 <div class="col-md-2">
                                                     <button type="submit" class="btn btn-info">Consultar</button>
                                                 </div>
                                         </div>
+                                    </form>
                                     </form>
                                 </div>
                             </div>
@@ -97,7 +98,7 @@
             <!--/row-->
             <hr>
             <p class="text-center"><br>
-                <a class="small text-info d-inline-block">Sandwich.com Inc.</a>
+                <a class="small text-info d-inline-block">SandwichesUCAB</a>
             </p>
         </div>
             {% bootstrap_javascript jquery='full' %}
