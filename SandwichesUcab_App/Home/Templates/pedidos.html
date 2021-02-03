@@ -1,96 +1,124 @@
+<html>
 
-  <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="icon" href="favicon.ico">
-     
-        <title>Realizar pedido | SandwichesUCAB</title>
-     
-            {# Cargamos la librería #}
-       {% load bootstrap4 %}
-     
-       {# CSS Bootstrap #}
-       {% bootstrap_css %}
-     
-     
-    </head>
-    <body>
-            
-<div class="container py-5">
-            <h2 class="text-center mb-5">Dale forma a tu pedido!</h2>
-            <hr class="my-5">
-            <div class="row">
-                <div class="col-sm">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
 
-                    <div class="col-md-10 offset-md-1">
+    <title>Realizar pedido | SandwichesUCAB</title>
+
+    {# Cargamos la librería #}
+    {% load bootstrap4 %}
+
+    {# CSS Bootstrap #}
+    {% bootstrap_css %}
+
+
+</head>
+
+<style>
+    .custom-control-input:checked~.custom-control-label::before {
+        border-color: transparent !important;
+    }
+
+    .custom-control-input:not(:disabled):active~.custom-control-label::before {
+        border-color: transparent !important;
+    }
+
+    .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+        background-color: #bd302c !important;
+    }
+
+    .custom-checkbox .custom-control-input:checked:focus~.custom-control-label::before {
+        box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(189, 48, 44, 0.25)
+    }
+
+    .custom-checkbox .custom-control-input:focus~.custom-control-label::before {
+        box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 0, 0, 0.25)
+    }
+
+    .custom-checkbox .custom-control-input:active~.custom-control-label::before {
+        background-color: #C8FFC8;
+    }
+
+    .custom-control-input:checked~.custom-control-label::before {
+        background-color: #bd302c !important;
+        box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(189, 48, 44, 0.25)
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-light" style="height: 7em;">
+        <img src="https://i.imgur.com/ZEBfCD1.png" class="mx-auto" width="90" height="90" alt="">
+    </nav>
+
+    <div class="container mt-5">
+        <div class="card mb-3 mx-auto" style="max-width: 980px; max-height: 505px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="http://www.persa.com.mx/images/img_servilletas300px.jpg" alt="...">
+                </div>
+                <div class="col-md-7">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Dale forma a tu pedido</h5>
+                        <p class="text-center">Pedido #{{pedido_id}}</p>
                         <span class="anchor" id="formComplex"></span>
-                        <h3>Comienza tu pedido . . .</h3>
-                        <h3>Pedido #{{pedido_id}}</h3>
-                
-                
-                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-                    <form action="{% url 'Home:totalizacionPage' %}" method="post">
-                        {% csrf_token %}
-                        <!-- form complex example -->
-                        <div class="form-row mt-4" >
-                        <h5>Selecciona el tamaño de tu sandwich</h5>
-                            <div class="col-md-8 pb-3" >
-                                
-                                <div class="form-group big">
-                                    {% for t in tamano %}
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="tam{{t.id}}" name="select_tamano" value={{t.id}} class="custom-control-input">
-                                        <label class="custom-control-label" for="tam{{t.id}}">{{t.nombre_tamano}} | {{t.costo_tamano}} $</label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            
-                            <div class="col-12" >
-                                <h5>Selecciona qué ingredientes deseas agregar</h5>
-
-                                {% for i in ing %}
-                                <div class="form-row">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="ingredientes" value={{i.id}} id="ing{{i.id}}">
-                                        <label class="custom-control-label" for="ing{{i.id}}">{{i.nombre_ingrediente}} | {{i.costo_ingrediente}} $</label>
-                                    </div>
+                        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                        <form action="{% url 'Home:totalizacionPage' %}" method="post">
+                            {% csrf_token %}
+                            <!-- form complex example -->
+                            <h6>Selecciona el tamaño de tu sandwich</h6>
+                            {% for t in tamano %}
+                            <div class="form-group">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="tam{{t.id}}" name="select_tamano" value={{t.id}}
+                                        class="custom-control-input">
+                                    <label class="custom-control-label" for="tam{{t.id}}">{{t.nombre_tamano}} |
+                                        {{t.costo_tamano}} $</label>
                                 </div>
                                 {% endfor %}
                             </div>
-                            
-                        </div>
-                        <div class="form-row mt-4">
-                            
-                            <div class="col-12">
-                                <input type="hidden" name="pedidoID" value="{{pedido_id}}">
-                                <button type="submit" class="btn btn-primary" name="action" value="agregar" style="margin-right: 6%">Agregar y repetir</button>
-                                <button type="submit" class="btn btn-success" name="action" value="finalizar">Agregar y finalizar</button>
+
+                            <h6>Selecciona qué ingredientes deseas agregar</h6>
+                            {% for i in ing %}
+                            <div class="form-row ml-1">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="ingredientes"
+                                        value={{i.id}} id="ing{{i.id}}">
+                                    <label class="custom-control-label" for="ing{{i.id}}">{{i.nombre_ingrediente}} |
+                                        {{i.costo_ingrediente}} $</label>
+                                </div>
                             </div>
+                            {% endfor %}
+                    </div>
+
+                    <input type="hidden" name="pedidoID" value="{{pedido_id}}">
+                    <div class="d-flex flex-row-reverse">
+                        <div class="p-1">
+                            <button type="submit" class="btn btn-dark" name="action" value="agregar">Agregar y repetir</button>
                         </div>
+                        <div class="p-1">
+                            <button type="submit" class="btn btn-danger" name="action" value="finalizar">Agregar y finalizar</button>
+
+                        </div>
+                    </div>
                     </form>
                 </div>
             </div>
-            <div class="col-sm">
-                    <img src="https://i.pinimg.com/originals/e8/b7/74/e8b7741566b382f5d964751125f0397a.jpg" width="66%" style="position: absolute; top: 0%" >
-                </div>
-            <!--/row-->
-        <br><br><br><br>
-            
         </div>
-        <!--/col-->
     </div>
-    <!--/row-->
+    </div>
+
+
     <hr>
     <p class="text-center"><br>
-        <a class="small text-info d-inline-block" >SandwichesUCAB</a>
+        <a class="small text-info d-inline-block">SandwichesUCAB</a>
     </p>
-    
-</div>
-<!--/container-->
-            {% bootstrap_javascript jquery='full' %}
-    </body>
-  </html>
+
+    <!--/container-->
+    {% bootstrap_javascript jquery='full' %}
+</body>
+
+</html>
