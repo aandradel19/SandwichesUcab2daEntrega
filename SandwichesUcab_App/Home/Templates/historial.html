@@ -14,6 +14,10 @@
        {% bootstrap_css %}
     </head>
     <body>
+        <nav class="navbar navbar-light" style="height: 7em;">
+            <img src="https://i.imgur.com/ZEBfCD1.png" class="mx-auto" width="90" height="90" alt="">
+        </nav>
+
         <div class="container py-5">
             <div class="row">
                 <div class="col-md-12">
@@ -23,8 +27,6 @@
 
                         <div class="col-md-10 offset-md-1">
                             <span class="anchor" id="formComplex"></span>
-                            <hr class="my-5">
-                            <h3 class="text-center mb-5">Reportes</h3>
                             <div class="row">
                                 <div class="col-sm">
                                     <form action="{% url 'Home:ventasTotalesPage' %}" method="post" class="text-center mb-4">
